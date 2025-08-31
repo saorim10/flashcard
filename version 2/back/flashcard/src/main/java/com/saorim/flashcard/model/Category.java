@@ -19,7 +19,6 @@ import jakarta.persistence.Table;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import lombok.ToString;
 
 @Data
 @NoArgsConstructor
@@ -35,15 +34,13 @@ public class Category {
     private String name;
     
     private String description;
-
-    // Usar EAGER loading para evitar problemas de serialização
-    @ToString.Exclude
-    @ManyToOne(fetch = FetchType.EAGER)
+    
+    @JsonIgnore
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "user_id", nullable = false)
     private User user;
-
+    
     @JsonIgnore
-    @ToString.Exclude
     @OneToMany(mappedBy = "category", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     private List<Flashcard> flashcards = new ArrayList<>();
 }

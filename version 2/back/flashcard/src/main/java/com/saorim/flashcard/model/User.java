@@ -16,7 +16,6 @@ import jakarta.persistence.Table;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import lombok.ToString;
 
 @Data
 @NoArgsConstructor
@@ -37,14 +36,12 @@ public class User {
     
     @Column(unique = true, nullable = false)
     private String email;
-
+    
     @JsonIgnore
-    @ToString.Exclude
     @OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
     private List<Category> categories = new ArrayList<>();
     
     @JsonIgnore
-    @ToString.Exclude
     @OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
     private List<Flashcard> flashcards = new ArrayList<>();
 }

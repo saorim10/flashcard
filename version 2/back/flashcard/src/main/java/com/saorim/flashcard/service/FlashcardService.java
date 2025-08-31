@@ -178,14 +178,18 @@ public class FlashcardService {
     /**
      * Busca flashcards por termo de pesquisa
      */
+//    public List<Flashcard> searchFlashcards(String searchTerm, String username) {
+//        User user = getUserByUsername(username);
+//        List<Flashcard> allFlashcards = flashcardRepository.findByUserId(user.getId());
+//        
+//        return allFlashcards.stream()
+//            .filter(f -> f.getQuestion().toLowerCase().contains(searchTerm.toLowerCase()) ||
+//                        f.getAnswer().toLowerCase().contains(searchTerm.toLowerCase()))
+//            .collect(Collectors.toList());
+//    }
     public List<Flashcard> searchFlashcards(String searchTerm, String username) {
         User user = getUserByUsername(username);
-        List<Flashcard> allFlashcards = flashcardRepository.findByUserId(user.getId());
-        
-        return allFlashcards.stream()
-            .filter(f -> f.getQuestion().toLowerCase().contains(searchTerm.toLowerCase()) ||
-                        f.getAnswer().toLowerCase().contains(searchTerm.toLowerCase()))
-            .collect(Collectors.toList());
+        return flashcardRepository.searchByQuestionOrAnswer(user.getId(), searchTerm);
     }
 
     /**

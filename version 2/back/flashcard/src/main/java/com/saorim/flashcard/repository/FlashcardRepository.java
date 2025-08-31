@@ -25,9 +25,9 @@ public interface FlashcardRepository extends JpaRepository<Flashcard, Long> {
 	@Query("SELECT f FROM Flashcard f WHERE f.user.id = :userId AND f.category.id = :categoryId ORDER BY f.lastReviewed ASC NULLS FIRST")
 	List<Flashcard> findDueForReviewByCategoryId(Long userId, Long categoryId);
 
-	@Query("SELECT f FROM Flashcard f WHERE f.user.id = :userId AND "
-			+ "(LOWER(f.question) LIKE LOWER(CONCAT('%', :searchTerm, '%')) OR "
-			+ "LOWER(f.answer) LIKE LOWER(CONCAT('%', :searchTerm, '%')))")
+	@Query("SELECT f FROM Flashcard f WHERE f.user.id = :userId AND " +
+		       "(LOWER(f.question) LIKE LOWER(CONCAT('%', :searchTerm, '%')) OR " +
+		       "LOWER(f.answer) LIKE LOWER(CONCAT('%', :searchTerm, '%')))")
 	List<Flashcard> searchByQuestionOrAnswer(@Param("userId") Long userId, @Param("searchTerm") String searchTerm);
 
 	@Query("SELECT COUNT(f) FROM Flashcard f WHERE f.user.id = :userId AND f.lastReviewed IS NOT NULL")

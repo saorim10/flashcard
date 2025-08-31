@@ -44,11 +44,14 @@ public class SecurityConfig {
 						.requestMatchers("/swagger-ui.html").permitAll()
 						.requestMatchers("/swagger-resources/**").permitAll()
 						.requestMatchers("/webjars/**").permitAll()
-						.anyRequest().authenticated());
+						.anyRequest().authenticated())
+				.userDetailsService(userDetailsService) // ← ADICIONAR ESTA LINHA
+		        .addFilterBefore(jwtAuthenticationFilter(), UsernamePasswordAuthenticationFilter.class)
+		        .cors(cors -> cors.configurationSource(corsConfigurationSource()));
 
-		http.addFilterBefore(jwtAuthenticationFilter(), UsernamePasswordAuthenticationFilter.class);
+		//http.addFilterBefore(jwtAuthenticationFilter(), UsernamePasswordAuthenticationFilter.class);
 
-		http.cors(cors -> cors.configurationSource(corsConfigurationSource()));
+		//http.cors(cors -> cors.configurationSource(corsConfigurationSource()));
 
 		return http.build();
 	}
